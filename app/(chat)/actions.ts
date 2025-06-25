@@ -1,5 +1,6 @@
 'use server';
-
+// functions to handle chat actions like generating titles, deleting messages, and updating visibility
+// these functions are server actions that can be called from the client side.
 import { generateText, type UIMessage } from 'ai';
 import { cookies } from 'next/headers';
 import {
@@ -10,7 +11,7 @@ import {
 import type { VisibilityType } from '@/components/visibility-selector';
 import { myProvider } from '@/lib/ai/providers';
 
-export async function saveChatModelAsCookie(model: string) {
+export async function saveChatModelAsCookie(model: string) {    // saving the chat model as a cooki
   const cookieStore = await cookies();
   cookieStore.set('chat-model', model);
 }

@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
-
+// sets up a layout for the chat application, including the sidebar and authentication.
+// this is used to provide a sideebar state. 
 import { AppSidebar } from '@/components/app-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { auth } from '../(auth)/auth';
@@ -18,7 +19,7 @@ export default async function Layout({
   return (
     <>
       <Script
-        src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"
+        src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"     // this is a script tag that loads the pyodide library, which is used to run Python code in the browser. basically it converts python code to wasm and runs it in the browser. 
         strategy="beforeInteractive"
       />
       <SidebarProvider defaultOpen={!isCollapsed}>
