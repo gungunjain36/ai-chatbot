@@ -1,3 +1,5 @@
+//chat api route
+//Post, Get and Delete methods for handling chat operations.
 import {
   appendClientMessage,
   appendResponseMessages,
@@ -144,7 +146,7 @@ export async function POST(request: Request) {
     const streamId = generateUUID();
     await createStreamId({ streamId, chatId: id });
 
-    const stream = createDataStream({
+    const stream = createDataStream({    //creating a data stream for the chat
       execute: (dataStream) => {
         const result = streamText({
           model: myProvider.languageModel(selectedChatModel),
