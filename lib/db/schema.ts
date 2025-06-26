@@ -200,3 +200,19 @@ export const lesson = pgTable('Lesson',{
 })
 
 export type Lesson = InferSelectModel<typeof lesson>;
+
+// student progress table added
+export const studentProgress = pgTable('StudentProgress', {
+  id: uuid('id').primaryKey().notNull().defaultRandom(),
+  userId: uuid('userId')
+    .notNull()
+    .references(() => user.id),
+  lessonId: uuid('lessonId')
+    .notNull()
+    .references(() => lesson.id),
+  progress: json('progress').notNull(),
+  createdAt: timestamp('createdAt').notNull(),
+});
+
+
+export type StudentProgress = InferSelectModel<typeof studentProgress>;

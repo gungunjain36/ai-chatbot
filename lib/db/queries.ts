@@ -16,6 +16,7 @@ import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 
 import {
+  studentProgress,
   user,
   chat,
   type User,
@@ -535,4 +536,36 @@ export async function getStreamIdsByChatId({ chatId }: { chatId: string }) {
       'Failed to get stream ids by chat id',
     );
   }
+}
+
+
+
+// function to mark the student progress in the course
+export async function markLessonAsComplete({ userId, lessonId } : {
+  userId: string;
+  lessonId: string;
+}) {
+  try {
+    const existingProgress = await db
+      .select()
+      .from(studentProgress)
+      .where(and(eq(studentProgress.userId, userId), eq(studentProgress.lessonId, lessonId)))
+      .limit(1);
+
+    if (existingProgress.length > 0) {
+      return existingProgress[0];
+    }
+
+    return await db.insert(studentProgress).values({
+      userId,
+      lessonId,
+      createdAt: new Date(),
+    });
+  } catch (error) {
+    throw new ChatSDKError(
+      'bad_request:database',
+      'Failed to mark lesson as complete',
+    );
+  }
+
 }
